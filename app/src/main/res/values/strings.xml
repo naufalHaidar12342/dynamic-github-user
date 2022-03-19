@@ -7,4 +7,5 @@
     <string name="user_repository_design_placeholder">Repository : 4</string>
     <string name="user_location_design_placeholder">Location : Jakarta</string>
     <string name="user_company_design_placeholder">Company : Bright Idea, Inc.</string>
+    <string name="scroll_view">scroll view wrapping recyclerview</string>
 </resources>
