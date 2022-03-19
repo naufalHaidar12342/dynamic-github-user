@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Dynamic Github User App</string>
+    <string name="full_name_design_placeholder">Ahmad Budd </string>
+    <string name="username_design_placeholder">/@ahmadbudd56</string>
+    <string name="user_follower_design_placeholder">Followers : 123</string>
+    <string name="user_following_design_placeholder"> Following : 23</string>
+    <string name="user_repository_design_placeholder">Repository : 4</string>
+    <string name="user_location_design_placeholder">Location : Jakarta</string>
+    <string name="user_company_design_placeholder">Company : Bright Idea, Inc.</string>
+</resources>
