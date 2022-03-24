@@ -1,6 +1,7 @@
 package xyz.heydarrn.dynamicgithubuserapp.model.adapters
 
 import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,6 +39,10 @@ class SearchResultAdapter(private val listSearchedUser:List<ItemsItem>):Recycler
                 .circleCrop()
                 .into(holder.profilePicture)
             githubUsername.text=searchResult.login
+            profileLink.setOnClickListener {
+                val openBrowser=Intent(Intent.ACTION_VIEW, Uri.parse(searchResult.htmlUrl))
+                it.context.startActivity(openBrowser)
+            }
 
 
         }
