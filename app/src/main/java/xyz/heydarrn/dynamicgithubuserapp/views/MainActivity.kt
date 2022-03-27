@@ -1,5 +1,6 @@
 package xyz.heydarrn.dynamicgithubuserapp.views
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -16,7 +17,7 @@ import xyz.heydarrn.dynamicgithubuserapp.viewmodels.GithubUserViewModel
 class MainActivity : AppCompatActivity() {
     private lateinit var bindingMainActivity: ActivityMainBinding
     private val githubUserViewModel by viewModels<GithubUserViewModel>()
-    private var resultAdapter :SearchResultAdapter=SearchResultAdapter()
+    private lateinit var resultAdapter:SearchResultAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,51 +26,48 @@ class MainActivity : AppCompatActivity() {
         bindingMainActivity= ActivityMainBinding.inflate(layoutInflater)
         setContentView(bindingMainActivity.root)
 
-        getInsertedText()
+        getInsertedUsername()
         setRecViewAdapter()
-        resultAdapter.notifyDataSetChanged()
+    }
 
-        githubUserViewModel.setResultForAdapter().observe(this, Observer { observing ->
-            if (observing==null){
-                resultAdapter.observeList(observing as ArrayList<ItemsItem>)
+
+    private fun setRecViewAdapter(){
+        resultAdapter= SearchResultAdapter()
+        resultAdapter.notifyDataSetChanged()
+        //when user selected one of search result, show the result in detailed manner
+        //on detailOfUserActivity
+        resultAdapter.setUserInfo(object : SearchResultAdapter.OnSelectedUserClicked {
+            override fun clickOnSelectedUser(selectedUser: ItemsItem) {
+                val showsDetail=Intent(this@MainActivity,DetailOfUserActivity::class.java)
+                showsDetail.putExtra(DetailOfUserActivity.EXTRA_USERNAME,selectedUser.login)
+                startActivity(showsDetail)
+            }
+
+        })
+        bindingMainActivity.apply {
+            recyclerviewSearchResult.layoutManager=LinearLayoutManager(this@MainActivity)
+            recyclerviewSearchResult.setHasFixedSize(true)
+            recyclerviewSearchResult.adapter=resultAdapter
+        }
+        githubUserViewModel.setResultForAdapter().observe(this, Observer {
+            if (it!=null){
+                resultAdapter.setArrayListForAdapter(it)
                 showLoadingAnimation(false)
             }
         })
-    }
-
-    private fun setRecViewAdapter(){
-        val recViewLayoutManager=LinearLayoutManager(this)
-//        val itemDecoration=DividerItemDecoration(this ,recViewLayoutManager.orientation)
-        bindingMainActivity.recyclerviewSearchResult.apply {
-            this.layoutManager=recViewLayoutManager
-            this.adapter=resultAdapter
-        }
-//        bindingMainActivity.recyclerviewSearchResult.addItemDecoration(itemDecoration)
 
     }
 
-    fun getInsertedText(){
-        bindingMainActivity.apply {
-
-            searchviewUserGithub.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
-                android.widget.SearchView.OnQueryTextListener {
-
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    if (query != null) {
-                        githubUserViewModel.searchUser(query)
-
-                        githubUserViewModel.showLoadingProgress.observe(this@MainActivity)
-                        { thisAnimation ->
-                            showLoadingAnimation(thisAnimation)
-                        }
-                    }
-
-                    searchviewUserGithub.clearFocus()
+    private fun getInsertedUsername(){
+        bindingMainActivity.apply { 
+            searchviewUserGithub.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(p0: String?): Boolean {
+                    githubUserViewModel.searchUserOnSubmittedText(p0!!)
                     return true
                 }
 
-                override fun onQueryTextChange(newText: String?): Boolean {
-                   return false
+                override fun onQueryTextChange(p0: String?): Boolean {
+                    return false
                 }
 
             })
@@ -79,7 +77,7 @@ class MainActivity : AppCompatActivity() {
     private fun showLoadingAnimation(loadingState:Boolean){
         when(loadingState){
             true -> bindingMainActivity.searchProgress.visibility=View.VISIBLE
-            else -> bindingMainActivity.searchProgress.visibility=View.INVISIBLE
+            else -> bindingMainActivity.searchProgress.visibility=View.GONE
         }
     }
 }

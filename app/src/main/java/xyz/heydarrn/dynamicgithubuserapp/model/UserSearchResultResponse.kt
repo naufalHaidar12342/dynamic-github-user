@@ -14,7 +14,7 @@ data class UserSearchResultResponse(
 	val incompleteResults: Boolean? = null,
 
 	@field:SerializedName("items")
-	val items: List<ItemsItem>
+	val items: ArrayList<ItemsItem>
 ) : Parcelable
 
 @kotlinx.parcelize.Parcelize

@@ -11,8 +11,11 @@ import xyz.heydarrn.dynamicgithubuserapp.model.UserFollowingInfoResponse
 import xyz.heydarrn.dynamicgithubuserapp.model.UserSearchResultResponse
 
 interface ApiService {
-    @Headers(AUTHORIZATION)
+    val fetchToken: PersonalToken.Companion
+        get() = PersonalToken
+
     @GET("search/users")
+    @Headers(fetchToken.TOKEN)
     fun getUserFromSearch(@Query("q") usernameQuery:String) : Call<UserSearchResultResponse>
 
     @GET ("users/{username}")
@@ -24,7 +27,4 @@ interface ApiService {
     @GET("user/{username}/following")
     fun getSelectedUserFollowing(@Path("following") selectedUserFollowing: String) :Call<UserFollowingInfoResponse>
 
-    companion object{
-        private const val AUTHORIZATION="Authorization:"+ "token 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"
-    }
 }
