@@ -63,10 +63,12 @@ class MainActivity : AppCompatActivity() {
             searchviewUserGithub.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(p0: String?): Boolean {
                     githubUserViewModel.searchUserOnSubmittedText(p0!!)
+                    searchviewUserGithub.clearFocus()
                     return true
                 }
 
                 override fun onQueryTextChange(p0: String?): Boolean {
+                    showLoadingAnimation(true)
                     return false
                 }
 
@@ -77,7 +79,7 @@ class MainActivity : AppCompatActivity() {
     private fun showLoadingAnimation(loadingState:Boolean){
         when(loadingState){
             true -> bindingMainActivity.searchProgress.visibility=View.VISIBLE
-            else -> bindingMainActivity.searchProgress.visibility=View.GONE
+            false -> bindingMainActivity.searchProgress.visibility=View.GONE
         }
     }
 }

@@ -10,7 +10,5 @@
 .DS_Store
 /build
 /captures
-.externalNativeBuild
-.cxx
 local.properties
-/app/src/main/java/xyz/heydarrn/dynamicgithubuserapp/model/api/PersonalToken.kt
+app/src/main/java/xyz/heydarrn/dynamicgithubuserapp/model/api/PersonalToken.kt

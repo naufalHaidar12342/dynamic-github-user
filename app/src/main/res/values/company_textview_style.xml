@@ -5,6 +5,7 @@
         <item name="android:textSize">14sp</item>
         <item name="drawableStartCompat">@drawable/ic_baseline_domain_24</item>
         <item name="android:padding">4dp</item>
+        <item name="android:drawablePadding">4dp</item>
 
     </style>
 </resources>

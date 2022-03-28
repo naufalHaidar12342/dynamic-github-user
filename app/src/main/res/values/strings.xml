@@ -8,10 +8,18 @@
     <string name="user_location_design_placeholder">Location : Jakarta</string>
     <string name="user_company_design_placeholder">Company : Bright Idea, Inc.</string>
     <string name="scroll_view">scroll view wrapping recyclerview</string>
-    <string name="followers_string_template">1%s followers</string>
-    <string name="following_string_template">1%s following</string>
-    <string name="repository_string_template">1%s repository</string>
+    <string name="followers_string_template">%1$s followers</string>
+    <string name="following_string_template">%1$s following</string>
+    <string name="repository_string_template">%1$s repository</string>
     <string name="button_visit_profile">Visit Profile!</string>
+    <string name="followers_tab">Followers</string>
+    <string name="following_tab">Following</string>
+    <string name="username_template">\@%1$s</string>
+    <string name="image_description">Picture of user goes here</string>
+    <string name="location_template">Location </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="monday">Monday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="tuesday">Tuesday</string>
 </resources>
