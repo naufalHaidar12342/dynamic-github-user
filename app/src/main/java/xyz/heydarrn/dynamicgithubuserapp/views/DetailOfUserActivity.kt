@@ -48,13 +48,14 @@ class DetailOfUserActivity : AppCompatActivity() {
 
                     textviewFullnameDetailScreen.text=observeUsername.name
                     textviewUsernameDetailScreen.text=resources.getString(R.string.username_template,observeUsername.login)
+
                     if (observeUsername.location!=null && observeUsername.company !=null){
                         textviewUserLocationDetailScreen.text=observeUsername.location
                         userCompanyDetailScreen.text=observeUsername.company
 
                     }else{
-                        textviewUserLocationDetailScreen.text="Location are hidden by user"
-                        userCompanyDetailScreen.text="Company are hidden by user"
+                        textviewUserLocationDetailScreen.text=getString(R.string.location_got_null_response_template)
+                        userCompanyDetailScreen.text=getString(R.string.company_got_null_response_template)
                     }
                     userRepositoryDetailView.text=resources.getString(R.string.repository_string_template,observeUsername.publicRepos.toString())
 

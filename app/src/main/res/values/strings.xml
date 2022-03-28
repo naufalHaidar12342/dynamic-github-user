@@ -22,4 +22,6 @@
     <string name="monday">Monday</string>
     <string name="wednesday">Wednesday</string>
     <string name="tuesday">Tuesday</string>
+    <string name="location_got_null_response_template">User does not disclose their location</string>
+    <string name="company_got_null_response_template">User does not disclose their company</string>
 </resources>
