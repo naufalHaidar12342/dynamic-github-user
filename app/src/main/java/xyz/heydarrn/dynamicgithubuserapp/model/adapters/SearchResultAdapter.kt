@@ -9,8 +9,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import xyz.heydarrn.dynamicgithubuserapp.databinding.UserCardBinding
 import xyz.heydarrn.dynamicgithubuserapp.model.ItemsItem
-import xyz.heydarrn.dynamicgithubuserapp.model.SelectedUserInfoResponse
-import xyz.heydarrn.dynamicgithubuserapp.model.UserSearchResultResponse
 
 class SearchResultAdapter:RecyclerView.Adapter<SearchResultAdapter.SearchResultViewHolder>() {
     private val list=ArrayList<ItemsItem>()

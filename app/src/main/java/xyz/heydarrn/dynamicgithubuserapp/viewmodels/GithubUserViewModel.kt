@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import xyz.heydarrn.dynamicgithubuserapp.databinding.ActivityMainBinding
 import xyz.heydarrn.dynamicgithubuserapp.model.ItemsItem
 import xyz.heydarrn.dynamicgithubuserapp.model.SelectedUserInfoResponse
 import xyz.heydarrn.dynamicgithubuserapp.model.UserSearchResultResponse

@@ -2,7 +2,6 @@ package xyz.heydarrn.dynamicgithubuserapp.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
 
 @kotlinx.parcelize.Parcelize
 data class UserFollowingInfoResponse(

@@ -1,11 +1,10 @@
 package xyz.heydarrn.dynamicgithubuserapp.views
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
-import androidx.appcompat.widget.SearchView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import xyz.heydarrn.dynamicgithubuserapp.R
@@ -49,12 +48,12 @@ class MainActivity : AppCompatActivity() {
             recyclerviewSearchResult.setHasFixedSize(true)
             recyclerviewSearchResult.adapter=resultAdapter
         }
-        githubUserViewModel.setResultForAdapter().observe(this, Observer {
-            if (it!=null){
+        githubUserViewModel.setResultForAdapter().observe(this) {
+            if (it != null) {
                 resultAdapter.setArrayListForAdapter(it)
                 showLoadingAnimation(false)
             }
-        })
+        }
 
     }
 
