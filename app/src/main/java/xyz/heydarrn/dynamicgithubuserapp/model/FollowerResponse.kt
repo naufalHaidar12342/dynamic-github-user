@@ -1,17 +1,14 @@
 package xyz.heydarrn.dynamicgithubuserapp.model
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
-@kotlinx.parcelize.Parcelize
-data class UserFollowersInfoResponse(
+data class FollowerResponse(
 
-	@field:SerializedName("UserFollowersInfoResponse")
-	val userFollowersInfoResponse: ArrayList<UserFollowersInfoResponseItem>
-) : Parcelable
+	@field:SerializedName("FollowerResponse")
+	val followerResponse: List<FollowerResponseItem?>? = null
+)
 
-@kotlinx.parcelize.Parcelize
-data class UserFollowersInfoResponseItem(
+data class FollowerResponseItem(
 
 	@field:SerializedName("gists_url")
 	val gistsUrl: String? = null,
@@ -66,4 +63,4 @@ data class UserFollowersInfoResponseItem(
 
 	@field:SerializedName("organizations_url")
 	val organizationsUrl: String? = null
-) : Parcelable
+)

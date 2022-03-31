@@ -5,10 +5,7 @@ import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.Query
-import xyz.heydarrn.dynamicgithubuserapp.model.SelectedUserInfoResponse
-import xyz.heydarrn.dynamicgithubuserapp.model.UserFollowersInfoResponse
-import xyz.heydarrn.dynamicgithubuserapp.model.UserFollowingInfoResponse
-import xyz.heydarrn.dynamicgithubuserapp.model.UserSearchResultResponse
+import xyz.heydarrn.dynamicgithubuserapp.model.*
 
 interface ApiService {
     val fetchToken: PersonalToken.Companion
@@ -22,9 +19,9 @@ interface ApiService {
     fun getSelectedUserInfo(@Path("username")selectedUser:String) : Call<SelectedUserInfoResponse>
 
     @GET("users/{username}/followers")
-    fun getSelectedUserFollowers(@Path("followers") selectedUserFollowers:String) : Call<UserFollowersInfoResponse>
+    fun getSelectedUserFollowers(@Path("username") selectedUserFollowers:String) : Call<ArrayList<UserFollowersInfoResponseItem>>
 
     @GET("user/{username}/following")
-    fun getSelectedUserFollowing(@Path("following") selectedUserFollowing: String) :Call<UserFollowingInfoResponse>
+    fun getSelectedUserFollowing(@Path("username") selectedUserFollowing: String) :Call<UserFollowingInfoResponse>
 
 }

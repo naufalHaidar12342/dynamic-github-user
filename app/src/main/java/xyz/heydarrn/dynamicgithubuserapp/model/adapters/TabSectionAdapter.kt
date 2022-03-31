@@ -1,12 +1,15 @@
 package xyz.heydarrn.dynamicgithubuserapp.model.adapters
 
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import xyz.heydarrn.dynamicgithubuserapp.views.FollowersFragment
 import xyz.heydarrn.dynamicgithubuserapp.views.FollowingFragment
 
-class TabSectionAdapter(activity:AppCompatActivity) : FragmentStateAdapter(activity) {
+class TabSectionAdapter(activity:AppCompatActivity,data :Bundle) : FragmentStateAdapter(activity) {
+    private var fragmentBundle:Bundle=data
+
     override fun getItemCount(): Int {
         /*specify how many tabs inside tab layout.
         since we need followers tab and following tab,
@@ -20,6 +23,7 @@ class TabSectionAdapter(activity:AppCompatActivity) : FragmentStateAdapter(activ
             0 -> fragment=FollowersFragment()
             1 -> fragment=FollowingFragment()
         }
+        fragment?.arguments=this.fragmentBundle
         return fragment as Fragment
     }
 

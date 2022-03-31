@@ -3,7 +3,7 @@
     android:height="24dp"
     android:viewportWidth="24"
     android:viewportHeight="24"
-    android:tint="?attr/color">
+    android:tint="@color/yankees_blue_gradation_6">
   <path
       android:fillColor="@android:color/white"
       android:pathData="M3,6H1v13c0,1.1 0.9,2 2,2h17v-2H3V6z"/>

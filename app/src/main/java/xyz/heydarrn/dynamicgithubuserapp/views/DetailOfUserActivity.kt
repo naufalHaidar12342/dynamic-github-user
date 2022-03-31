@@ -16,6 +16,8 @@ import xyz.heydarrn.dynamicgithubuserapp.viewmodels.GithubUserViewModel
 class DetailOfUserActivity : AppCompatActivity() {
     private lateinit var userDetailBind:ActivityDetailOfUserBinding
     private val viewModel by viewModels<GithubUserViewModel>()
+    private var receiveUsername:String? = null
+    private var followerBundle=Bundle()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,14 +26,16 @@ class DetailOfUserActivity : AppCompatActivity() {
         userDetailBind= ActivityDetailOfUserBinding.inflate(layoutInflater)
         setContentView(userDetailBind.root)
 
-        showsUser()
         setTabLayout()
+        showsUser()
 
     }
 
     private fun showsUser(){
         //receive intent, sent from main activity
-        val receiveUsername=intent.getStringExtra(EXTRA_USERNAME)
+        receiveUsername=intent.getStringExtra(EXTRA_USERNAME)
+
+        followerBundle.putString(FollowersFragment.USER_FOLLOWERS,receiveUsername)
 
         //we got username, then pass it/feed it into setUserDetailedInfo()
         receiveUsername?.let { usernameChosen ->
@@ -74,9 +78,10 @@ class DetailOfUserActivity : AppCompatActivity() {
     // a function to set tabs title and fragment to detail activity,
     // related to each tab
     private fun setTabLayout(){
-        val tabSection=TabSectionAdapter(this)
+        val tabSection=TabSectionAdapter(this,followerBundle)
         val viewPagers:ViewPager2=userDetailBind.viewPagerFollowingFollowers
         viewPagers.adapter=tabSection
+
         val tabs:TabLayout=userDetailBind.followingFollowersDetail
         TabLayoutMediator(tabs,viewPagers) {tab, position ->
             tab.text=resources.getString(TAB_NAMES[position])

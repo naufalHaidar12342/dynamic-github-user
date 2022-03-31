@@ -23,7 +23,7 @@ class SearchResultAdapter:RecyclerView.Adapter<SearchResultAdapter.SearchResultV
         notifyDataSetChanged()
     }
 
-    inner class SearchResultViewHolder(val binding: UserCardBinding):RecyclerView.ViewHolder(binding.root) {
+    inner class SearchResultViewHolder(private val binding: UserCardBinding):RecyclerView.ViewHolder(binding.root) {
         fun bindData(itemsItem: ItemsItem){
             binding.apply {
                 Glide.with(itemView)

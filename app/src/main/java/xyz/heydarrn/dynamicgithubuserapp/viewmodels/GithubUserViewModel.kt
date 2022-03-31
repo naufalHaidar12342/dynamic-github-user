@@ -7,22 +7,16 @@ import androidx.lifecycle.ViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import xyz.heydarrn.dynamicgithubuserapp.model.ItemsItem
-import xyz.heydarrn.dynamicgithubuserapp.model.SelectedUserInfoResponse
-import xyz.heydarrn.dynamicgithubuserapp.model.UserSearchResultResponse
+import xyz.heydarrn.dynamicgithubuserapp.model.*
 import xyz.heydarrn.dynamicgithubuserapp.model.api.ApiConfig
 
 class GithubUserViewModel:ViewModel() {
 
-
     private var _listOfSearchedUser=MutableLiveData<ArrayList<ItemsItem>>()
-    val listOfSearchedUser:LiveData<ArrayList<ItemsItem>> = _listOfSearchedUser
+    private val listOfSearchedUser:LiveData<ArrayList<ItemsItem>> = _listOfSearchedUser
 
     private var _loadingAnimation=MutableLiveData<Boolean>()
     val showLoadingProgress:LiveData<Boolean> = _loadingAnimation
-
-    private var _showUserDetail=MutableLiveData<SelectedUserInfoResponse>()
-    val openDetailedInfo:LiveData<SelectedUserInfoResponse> = _showUserDetail
 
     fun searchUserOnSubmittedText(findUser:String){
         val client=ApiConfig.getApiService().getUserFromSearch(findUser)
@@ -53,9 +47,11 @@ class GithubUserViewModel:ViewModel() {
         })
     }
 
-    fun setResultForAdapter():LiveData<ArrayList<ItemsItem>>{
-        return listOfSearchedUser
-    }
+    fun setResultForAdapter():LiveData<ArrayList<ItemsItem>> = listOfSearchedUser
+
+
+    private var _showUserDetail=MutableLiveData<SelectedUserInfoResponse>()
+    private val openDetailedInfo:LiveData<SelectedUserInfoResponse> = _showUserDetail
 
     fun setUserDetailedInfo(selectedUsername:String){
         val detailClient=ApiConfig.getApiService().getSelectedUserInfo(selectedUsername)
@@ -78,8 +74,32 @@ class GithubUserViewModel:ViewModel() {
         })
     }
 
-    fun setSelectedUserDetail():LiveData<SelectedUserInfoResponse>{
-        return openDetailedInfo
+    fun setSelectedUserDetail():LiveData<SelectedUserInfoResponse> = openDetailedInfo
+
+    private var _showFollowerOfUser=MutableLiveData<ArrayList<UserFollowersInfoResponseItem>>()
+    val showFollowerOfUser:LiveData<ArrayList<UserFollowersInfoResponseItem>> = _showFollowerOfUser
+
+    fun setUserFollowersInfo(selectedUser:String){
+        val followerClient=ApiConfig.getApiService().getSelectedUserFollowers(selectedUser)
+        followerClient.enqueue(object : Callback<ArrayList<UserFollowersInfoResponseItem>> {
+            override fun onResponse(
+                call: Call<ArrayList<UserFollowersInfoResponseItem>>,
+                response: Response<ArrayList<UserFollowersInfoResponseItem>>
+            ) {
+                if (response.isSuccessful) response.body()
+                Log.d("follower success", "onResponse: ${response.message()}")
+            }
+
+            override fun onFailure(
+                call: Call<ArrayList<UserFollowersInfoResponseItem>>,
+                t: Throwable
+            ) {
+                Log.d("follower fail", "onFailure: ${t.message}")
+            }
+
+        })
     }
+
+    fun setSelectedUserFollowersInfo(): LiveData<ArrayList<UserFollowersInfoResponseItem>> = showFollowerOfUser
 
 }

@@ -7,7 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="github_primary">#010409</color>
-    <color name="tailwind_code_snippet">#1e293b</color>
-    <color name="github_sidebar">#0d1117</color>
+    <color name="yankees_blue">#1E293B</color>
+    <color name="yankees_blue_gradation_1">#444E62</color>
+    <color name="yankees_blue_gradation_2">#6C778C</color>
+    <color name="yankees_blue_gradation_3">#98A2B9</color>
+    <color name="yankees_blue_gradation_4">#C5D0E8</color>
+    <color name="yankees_blue_gradation_5">#E1ECFF</color>
+    <color name="yankees_blue_gradation_6">#E4EFFF</color>
 </resources>

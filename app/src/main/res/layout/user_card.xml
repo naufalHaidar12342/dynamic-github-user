@@ -7,7 +7,7 @@
     android:layout_marginStart="14dp"
     android:layout_marginTop="8dp"
     android:layout_marginEnd="14dp"
-    app:cardBackgroundColor="@color/tailwind_code_snippet"
+    app:cardBackgroundColor="@color/yankees_blue"
     app:cardCornerRadius="16dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -50,8 +50,10 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="40dp"
             android:layout_marginBottom="16dp"
-            android:backgroundTint="@color/github_sidebar"
+            android:backgroundTint="@color/yankees_blue_gradation_1"
+            android:drawableStart="@drawable/ic_baseline_send_24"
             android:text="@string/button_visit_profile"
+            android:textColor="@color/white"
             app:icon="@drawable/ic_baseline_send_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
