@@ -76,30 +76,6 @@ class GithubUserViewModel:ViewModel() {
 
     fun setSelectedUserDetail():LiveData<SelectedUserInfoResponse> = openDetailedInfo
 
-    private var _showFollowerOfUser=MutableLiveData<ArrayList<UserFollowersInfoResponseItem>>()
-    val showFollowerOfUser:LiveData<ArrayList<UserFollowersInfoResponseItem>> = _showFollowerOfUser
 
-    fun setUserFollowersInfo(selectedUser:String){
-        val followerClient=ApiConfig.getApiService().getSelectedUserFollowers(selectedUser)
-        followerClient.enqueue(object : Callback<ArrayList<UserFollowersInfoResponseItem>> {
-            override fun onResponse(
-                call: Call<ArrayList<UserFollowersInfoResponseItem>>,
-                response: Response<ArrayList<UserFollowersInfoResponseItem>>
-            ) {
-                if (response.isSuccessful) response.body()
-                Log.d("follower success", "onResponse: ${response.message()}")
-            }
-
-            override fun onFailure(
-                call: Call<ArrayList<UserFollowersInfoResponseItem>>,
-                t: Throwable
-            ) {
-                Log.d("follower fail", "onFailure: ${t.message}")
-            }
-
-        })
-    }
-
-    fun setSelectedUserFollowersInfo(): LiveData<ArrayList<UserFollowersInfoResponseItem>> = showFollowerOfUser
 
 }

@@ -24,4 +24,5 @@
     <string name="tuesday">Tuesday</string>
     <string name="location_got_null_response_template">User does not disclose their location</string>
     <string name="company_got_null_response_template">User does not disclose their company</string>
+    <string name="fullname_got_null_response_template">User does not set their display name</string>
 </resources>

@@ -52,7 +52,12 @@ class DetailOfUserActivity : AppCompatActivity() {
                         .circleCrop()
                         .into(userImageDetailScreen)
 
-                    textviewFullnameDetailScreen.text=observeUsername.name
+                    if (observeUsername.name!=null){
+                        textviewFullnameDetailScreen.text=observeUsername.name
+                    }else{
+                        textviewFullnameDetailScreen.text=resources.getString(R.string.fullname_got_null_response_template)
+                    }
+
                     textviewUsernameDetailScreen.text=resources.getString(R.string.username_template,observeUsername.login)
 
                     // usually, user on github does not fill their location or company information,
@@ -86,6 +91,7 @@ class DetailOfUserActivity : AppCompatActivity() {
         TabLayoutMediator(tabs,viewPagers) {tab, position ->
             tab.text=resources.getString(TAB_NAMES[position])
         }.attach()
+
     }
 
     //constant value for selected username and tab title/name

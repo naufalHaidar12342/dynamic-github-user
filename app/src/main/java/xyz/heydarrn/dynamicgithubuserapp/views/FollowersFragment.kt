@@ -9,12 +9,13 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import xyz.heydarrn.dynamicgithubuserapp.databinding.FragmentFollowersBinding
 import xyz.heydarrn.dynamicgithubuserapp.model.adapters.FollowersAdapter
+import xyz.heydarrn.dynamicgithubuserapp.viewmodels.FollowersViewModel
 import xyz.heydarrn.dynamicgithubuserapp.viewmodels.GithubUserViewModel
 
 class FollowersFragment : Fragment() {
     private var _bindingFollowers:FragmentFollowersBinding? = null
     private val bindingFollowers =_bindingFollowers
-    private val githubUserViewModel by viewModels<GithubUserViewModel>()
+    private val githubUserViewModel by viewModels<FollowersViewModel>()
     private lateinit var userFollowersAdapter :FollowersAdapter
     private lateinit var usernameReceived:String
 
