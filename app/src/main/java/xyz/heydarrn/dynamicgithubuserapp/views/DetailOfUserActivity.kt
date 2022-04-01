@@ -11,11 +11,11 @@ import com.google.android.material.tabs.TabLayoutMediator
 import xyz.heydarrn.dynamicgithubuserapp.R
 import xyz.heydarrn.dynamicgithubuserapp.databinding.ActivityDetailOfUserBinding
 import xyz.heydarrn.dynamicgithubuserapp.model.adapters.TabSectionAdapter
-import xyz.heydarrn.dynamicgithubuserapp.viewmodels.GithubUserViewModel
+import xyz.heydarrn.dynamicgithubuserapp.viewmodels.SetUserDetailViewModel
 
 class DetailOfUserActivity : AppCompatActivity() {
     private lateinit var userDetailBind:ActivityDetailOfUserBinding
-    private val viewModel by viewModels<GithubUserViewModel>()
+    private val viewModel by viewModels<SetUserDetailViewModel>()
     private var receiveUsername:String? = null
     private var followerBundle=Bundle()
 
@@ -35,7 +35,7 @@ class DetailOfUserActivity : AppCompatActivity() {
         //receive intent, sent from main activity
         receiveUsername=intent.getStringExtra(EXTRA_USERNAME)
 
-        followerBundle.putString(FollowersFragment.USER_FOLLOWERS,receiveUsername)
+        followerBundle.putString(FollowingAndFollowerFragment.USER_FOLLOWERS,receiveUsername)
 
         //we got username, then pass it/feed it into setUserDetailedInfo()
         receiveUsername?.let { usernameChosen ->

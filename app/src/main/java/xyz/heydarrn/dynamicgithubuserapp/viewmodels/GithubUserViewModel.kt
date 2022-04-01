@@ -50,31 +50,6 @@ class GithubUserViewModel:ViewModel() {
     fun setResultForAdapter():LiveData<ArrayList<ItemsItem>> = listOfSearchedUser
 
 
-    private var _showUserDetail=MutableLiveData<SelectedUserInfoResponse>()
-    private val openDetailedInfo:LiveData<SelectedUserInfoResponse> = _showUserDetail
-
-    fun setUserDetailedInfo(selectedUsername:String){
-        val detailClient=ApiConfig.getApiService().getSelectedUserInfo(selectedUsername)
-        detailClient.enqueue(object : Callback<SelectedUserInfoResponse> {
-
-            override fun onResponse(
-                call: Call<SelectedUserInfoResponse>,
-                response: Response<SelectedUserInfoResponse>
-            ) {
-                if (response.isSuccessful){
-                    _showUserDetail.value=response.body()
-                }
-                Log.d("success,1 user detail", "onResponse: ${response.message()}")
-            }
-
-            override fun onFailure(call: Call<SelectedUserInfoResponse>, t: Throwable) {
-                Log.d("failed, 1 user detail", "onFailure: ${t.message}")
-            }
-
-        })
-    }
-
-    fun setSelectedUserDetail():LiveData<SelectedUserInfoResponse> = openDetailedInfo
 
 
 

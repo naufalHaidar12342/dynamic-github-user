@@ -6,7 +6,10 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import xyz.heydarrn.dynamicgithubuserapp.R
 import xyz.heydarrn.dynamicgithubuserapp.databinding.ActivityMainBinding
 import xyz.heydarrn.dynamicgithubuserapp.model.ItemsItem
@@ -27,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         getInsertedUsername()
         setRecViewAdapter()
+        observeSearchResult()
     }
 
 
@@ -43,18 +47,24 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
-        bindingMainActivity.apply {
-            recyclerviewSearchResult.layoutManager=LinearLayoutManager(this@MainActivity)
-            recyclerviewSearchResult.setHasFixedSize(true)
-            recyclerviewSearchResult.adapter=resultAdapter
+        bindingMainActivity.recyclerviewSearchResult.apply {
+            this.setHasFixedSize(true)
+            this.layoutManager=LinearLayoutManager(this@MainActivity)
+            this.adapter=resultAdapter
         }
-        githubUserViewModel.setResultForAdapter().observe(this) {
-            if (it != null) {
-                resultAdapter.setArrayListForAdapter(it)
-                showLoadingAnimation(false)
+    }
+
+    private fun observeSearchResult(){
+        githubUserViewModel.apply {
+            viewModelScope.launch(Dispatchers.Main){
+                setResultForAdapter().observe(this@MainActivity){ newArrayList ->
+                    if (newArrayList!= null) {
+                        resultAdapter.setArrayListForAdapter(newArrayList)
+                        showLoadingAnimation(false)
+                    }
+                }
             }
         }
-
     }
 
     private fun getInsertedUsername(){

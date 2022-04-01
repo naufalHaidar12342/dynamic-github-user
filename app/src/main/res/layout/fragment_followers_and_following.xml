@@ -4,7 +4,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.FollowersFragment">
+    tools:context=".views.FollowingAndFollowerFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,7 +12,7 @@
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview_followers"
+            android:id="@+id/recyclerview_followers_and_following"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>

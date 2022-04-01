@@ -7,14 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import xyz.heydarrn.dynamicgithubuserapp.databinding.FragmentFollowersBinding
+import xyz.heydarrn.dynamicgithubuserapp.databinding.FragmentFollowersAndFollowingBinding
 import xyz.heydarrn.dynamicgithubuserapp.model.adapters.FollowersAdapter
+import xyz.heydarrn.dynamicgithubuserapp.model.adapters.FollowingAdapter
 import xyz.heydarrn.dynamicgithubuserapp.viewmodels.FollowersViewModel
-import xyz.heydarrn.dynamicgithubuserapp.viewmodels.GithubUserViewModel
 
-class FollowersFragment : Fragment() {
-    private var _bindingFollowers:FragmentFollowersBinding? = null
-    private val bindingFollowers =_bindingFollowers
+class FollowingAndFollowerFragment : Fragment() {
+    private var _bindingFollowers:FragmentFollowersAndFollowingBinding? = null
+    private val bindingFollowers get() = _bindingFollowers
     private val githubUserViewModel by viewModels<FollowersViewModel>()
     private lateinit var userFollowersAdapter :FollowersAdapter
     private lateinit var usernameReceived:String
@@ -24,14 +24,14 @@ class FollowersFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _bindingFollowers= FragmentFollowersBinding.inflate(inflater,container,false)
+        _bindingFollowers= FragmentFollowersAndFollowingBinding.inflate(inflater,container,false)
         return bindingFollowers?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        _bindingFollowers= FragmentFollowersBinding.bind(view)
 
+        arguments?.getInt(TAB_INDEX,0)
         observeDataFollowers()
         setFollowersRecViewAdapter()
     }
@@ -40,10 +40,10 @@ class FollowersFragment : Fragment() {
         userFollowersAdapter= FollowersAdapter()
         userFollowersAdapter.notifyDataSetChanged()
 
-        bindingFollowers?.apply {
-            recyclerviewFollowers.setHasFixedSize(true)
-            recyclerviewFollowers.layoutManager=LinearLayoutManager(context)
-            recyclerviewFollowers.adapter=userFollowersAdapter
+        bindingFollowers?.recyclerviewFollowersAndFollowing?.apply {
+            this.setHasFixedSize(true)
+            this.layoutManager=LinearLayoutManager(context)
+            this.adapter=userFollowersAdapter
         }
     }
 
@@ -51,19 +51,19 @@ class FollowersFragment : Fragment() {
         val argumentFollowers=arguments
         usernameReceived=argumentFollowers?.getString(USER_FOLLOWERS).toString()
 
-        githubUserViewModel.apply {
-            this.setUserFollowersInfo(usernameReceived)
-            this.setSelectedUserFollowersInfo().observe(viewLifecycleOwner){ observeFollowers ->
-                if (observeFollowers!=null){
-                    userFollowersAdapter.setFollowersListForAdapter(observeFollowers)
-
-                }
+        githubUserViewModel.setUserFollowersInfo(usernameReceived)
+        githubUserViewModel.setSelectedUserFollowersInfo().observe(viewLifecycleOwner){
+            if (it!=null){
+                userFollowersAdapter.setFollowersListForAdapter(it)
             }
         }
-
-
     }
-    
+
+    fun setFollowingRecViewAdapter(){
+        val followingAdapter:FollowingAdapter by lazy {
+            FollowingAdapter()
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -72,5 +72,6 @@ class FollowersFragment : Fragment() {
 
     companion object {
         const val USER_FOLLOWERS="follower"
+        const val TAB_INDEX="index of each tab"
     }
 }

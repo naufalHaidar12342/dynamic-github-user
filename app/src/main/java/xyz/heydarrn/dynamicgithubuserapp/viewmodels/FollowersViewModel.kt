@@ -22,7 +22,7 @@ class FollowersViewModel : ViewModel() {
                 response: Response<ArrayList<UserFollowersInfoResponseItem>>
             ) {
                 if (response.isSuccessful) {
-                    _showFollowerOfUser.value= response.body()
+                    _showFollowerOfUser.postValue(response.body())
                 }
                 Log.d("follower success", "onResponse: ${response.message()}")
             }
