@@ -35,7 +35,7 @@ class DetailOfUserActivity : AppCompatActivity() {
         //receive intent, sent from main activity
         receiveUsername=intent.getStringExtra(EXTRA_USERNAME)
 
-        followerBundle.putString(FollowingAndFollowerFragment.USER_FOLLOWERS,receiveUsername)
+        followerBundle.putString(EXTRA_USERNAME,receiveUsername)
 
         //we got username, then pass it/feed it into setUserDetailedInfo()
         receiveUsername?.let { usernameChosen ->

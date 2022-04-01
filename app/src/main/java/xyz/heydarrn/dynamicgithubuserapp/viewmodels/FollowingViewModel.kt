@@ -37,4 +37,8 @@ class FollowingViewModel : ViewModel() {
 
         })
     }
+
+    fun monitorFollowingInfo():LiveData<ArrayList<UserFollowingInfoResponseItem>> {
+        return userFollowingInfo
+    }
 }

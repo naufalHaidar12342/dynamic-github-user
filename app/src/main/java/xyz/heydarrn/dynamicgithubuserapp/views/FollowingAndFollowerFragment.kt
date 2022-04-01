@@ -11,6 +11,7 @@ import xyz.heydarrn.dynamicgithubuserapp.databinding.FragmentFollowersAndFollowi
 import xyz.heydarrn.dynamicgithubuserapp.model.adapters.FollowersAdapter
 import xyz.heydarrn.dynamicgithubuserapp.model.adapters.FollowingAdapter
 import xyz.heydarrn.dynamicgithubuserapp.viewmodels.FollowersViewModel
+import xyz.heydarrn.dynamicgithubuserapp.viewmodels.FollowingViewModel
 
 class FollowingAndFollowerFragment : Fragment() {
     private var _bindingFollowers:FragmentFollowersAndFollowingBinding? = null
@@ -18,6 +19,8 @@ class FollowingAndFollowerFragment : Fragment() {
     private val githubUserViewModel by viewModels<FollowersViewModel>()
     private lateinit var userFollowersAdapter :FollowersAdapter
     private lateinit var usernameReceived:String
+    private val followingViewModel by viewModels<FollowingViewModel>()
+    private val followingAdapter:FollowingAdapter by lazy { FollowingAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,11 +33,16 @@ class FollowingAndFollowerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        _bindingFollowers= FragmentFollowersAndFollowingBinding.bind(view)
 
         arguments?.getInt(TAB_INDEX,0)
         observeDataFollowers()
         setFollowersRecViewAdapter()
+
+//        observeDataFollowing()
+//        setFollowingRecViewAdapter()
     }
+
 
     private fun setFollowersRecViewAdapter(){
         userFollowersAdapter= FollowersAdapter()
@@ -49,7 +57,7 @@ class FollowingAndFollowerFragment : Fragment() {
 
     private fun observeDataFollowers(){
         val argumentFollowers=arguments
-        usernameReceived=argumentFollowers?.getString(USER_FOLLOWERS).toString()
+        usernameReceived=argumentFollowers?.getString(DetailOfUserActivity.EXTRA_USERNAME).toString()
 
         githubUserViewModel.setUserFollowersInfo(usernameReceived)
         githubUserViewModel.setSelectedUserFollowersInfo().observe(viewLifecycleOwner){
@@ -59,9 +67,24 @@ class FollowingAndFollowerFragment : Fragment() {
         }
     }
 
-    fun setFollowingRecViewAdapter(){
-        val followingAdapter:FollowingAdapter by lazy {
-            FollowingAdapter()
+    private fun setFollowingRecViewAdapter(){
+        followingAdapter.notifyDataSetChanged()
+
+        bindingFollowers?.recyclerviewFollowersAndFollowing?.apply {
+            this.setHasFixedSize(true)
+            this.layoutManager=LinearLayoutManager(context)
+            this.adapter=followingAdapter
+        }
+    }
+
+    fun observeDataFollowing(){
+        val argumentFollowing=arguments
+        usernameReceived=argumentFollowing?.getString(USER_FOLLOWERS_FOLLOWING).toString()
+
+        followingViewModel.monitorFollowingInfo().observe(viewLifecycleOwner){
+            if (it!=null){
+                followingAdapter.setFollowingListForAdapter(it)
+            }
         }
     }
 
@@ -71,7 +94,7 @@ class FollowingAndFollowerFragment : Fragment() {
     }
 
     companion object {
-        const val USER_FOLLOWERS="follower"
+        const val USER_FOLLOWERS_FOLLOWING="follower"
         const val TAB_INDEX="index of each tab"
     }
 }
