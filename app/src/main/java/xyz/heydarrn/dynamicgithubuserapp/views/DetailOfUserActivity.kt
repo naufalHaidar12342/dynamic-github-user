@@ -17,7 +17,7 @@ class DetailOfUserActivity : AppCompatActivity() {
     private lateinit var userDetailBind:ActivityDetailOfUserBinding
     private val viewModel by viewModels<SetUserDetailViewModel>()
     private var receiveUsername:String? = null
-    private var followerBundle=Bundle()
+    private var sendFollowerFollowingData=Bundle()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +35,8 @@ class DetailOfUserActivity : AppCompatActivity() {
         //receive intent, sent from main activity
         receiveUsername=intent.getStringExtra(EXTRA_USERNAME)
 
-        followerBundle.putString(EXTRA_USERNAME,receiveUsername)
+        //with Bundle, sending string to fragment that associated with selected tab
+        sendFollowerFollowingData.putString(SEND_USERNAME,receiveUsername)
 
         //we got username, then pass it/feed it into setUserDetailedInfo()
         receiveUsername?.let { usernameChosen ->
@@ -83,7 +84,7 @@ class DetailOfUserActivity : AppCompatActivity() {
     // a function to set tabs title and fragment to detail activity,
     // related to each tab
     private fun setTabLayout(){
-        val tabSection=TabSectionAdapter(this,followerBundle)
+        val tabSection=TabSectionAdapter(this,sendFollowerFollowingData)
         val viewPagers:ViewPager2=userDetailBind.viewPagerFollowingFollowers
         viewPagers.adapter=tabSection
 
@@ -91,12 +92,12 @@ class DetailOfUserActivity : AppCompatActivity() {
         TabLayoutMediator(tabs,viewPagers) {tab, position ->
             tab.text=resources.getString(TAB_NAMES[position])
         }.attach()
-
     }
 
     //constant value for selected username and tab title/name
     companion object{
         const val EXTRA_USERNAME="username of github user goes here"
+        const val SEND_USERNAME="username for follower fragment and following fragment"
         private val TAB_NAMES= intArrayOf(
             R.string.followers_tab,
             R.string.following_tab

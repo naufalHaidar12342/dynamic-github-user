@@ -4,10 +4,12 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import xyz.heydarrn.dynamicgithubuserapp.views.FollowingAndFollowerFragment
+import xyz.heydarrn.dynamicgithubuserapp.views.FollowerListFragment
+import xyz.heydarrn.dynamicgithubuserapp.views.FollowingListFragment
 
-class TabSectionAdapter(activity:AppCompatActivity,data :Bundle) : FragmentStateAdapter(activity) {
-    private var fragmentBundle:Bundle=data
+class TabSectionAdapter(activity:AppCompatActivity, data:Bundle) : FragmentStateAdapter(activity) {
+    //initialize fragmentBundle value from parameter
+    private var fragmentBundle:Bundle = data
 
     override fun getItemCount(): Int {
         /*specify how many tabs inside tab layout.
@@ -17,13 +19,16 @@ class TabSectionAdapter(activity:AppCompatActivity,data :Bundle) : FragmentState
     }
 
     override fun createFragment(position: Int): Fragment {
-        val fragment= FollowingAndFollowerFragment()
-        fragment.arguments=Bundle().apply {
-            putInt(FollowingAndFollowerFragment.TAB_INDEX,position+1)
+        var fragment:Fragment?=null
+        when(position){
+            0 -> fragment = FollowerListFragment()
+            1 -> fragment = FollowingListFragment()
         }
-        return fragment
+        /*when one of tab selected, it will send argument, containing the bundle here,
+        * to the fragment associated with the selected tabs*/
+        fragment?.arguments=this.fragmentBundle
+        return fragment as Fragment
     }
-
 
 
 }
