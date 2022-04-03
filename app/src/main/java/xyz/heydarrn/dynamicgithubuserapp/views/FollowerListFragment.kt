@@ -1,16 +1,15 @@
 package xyz.heydarrn.dynamicgithubuserapp.views
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import xyz.heydarrn.dynamicgithubuserapp.R
 import xyz.heydarrn.dynamicgithubuserapp.databinding.FragmentFollowerListBinding
 import xyz.heydarrn.dynamicgithubuserapp.model.adapters.FollowersAdapter
 import xyz.heydarrn.dynamicgithubuserapp.viewmodels.FollowersViewModel
@@ -34,8 +33,9 @@ class FollowerListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setFollowerRecyclerView()
+        setFollowerData()
         observeFollowerData()
-        observeLoading()
+
     }
 
     private fun setFollowerRecyclerView(){
@@ -54,26 +54,21 @@ class FollowerListFragment : Fragment() {
     }
 
     private fun observeFollowerData(){
-        setFollowerData()
-        followerViewModel.setSelectedUserFollowersInfo().observe(viewLifecycleOwner){followerObserver ->
-            if (followerObserver!=null){
-                followerAdapter.setFollowersListForAdapter(followerObserver)
+        followerViewModel.viewModelScope.launch(Dispatchers.Main){
+            followerViewModel.setSelectedUserFollowersInfo().observe(viewLifecycleOwner){followerObserver ->
+                if (followerObserver!=null){
+                    false.followerAnimation()
+                    followerAdapter.setFollowersListForAdapter(followerObserver)
+                }
             }
-        }
 
+        }
     }
 
-    private fun observeLoading(){
-        followerViewModel.monitorLoadingAnimation().observe(viewLifecycleOwner){
-            if (it!=null){
-                showFollowingDataLoaded(it)
-            }
-        }
 
-    }
 
-    private fun showFollowingDataLoaded(condition:Boolean){
-        when(condition){
+    private fun Boolean.followerAnimation() {
+        when(this){
             true -> followerBind?.progressBarFollowers?.visibility=View.VISIBLE
             false -> followerBind?.progressBarFollowers?.visibility=View.GONE
         }

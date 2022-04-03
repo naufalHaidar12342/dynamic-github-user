@@ -33,8 +33,8 @@ class FollowingListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setFollowingRecyclerView()
+        setFollowingData()
         observeFollowingData()
-        observeFollowingLoaded()
     }
 
     private fun setFollowingRecyclerView(){
@@ -49,29 +49,26 @@ class FollowingListFragment : Fragment() {
     private fun setFollowingData(){
         val arguments=arguments
         followingUsername=arguments?.getString(DetailOfUserActivity.SEND_USERNAME).toString()
-        followingViewModel.showFollowingInfo(followingUsername)
+        followingViewModel.viewModelScope.launch(Dispatchers.IO){
+            followingViewModel.showFollowingInfo(followingUsername)
+        }
     }
 
     private fun observeFollowingData(){
-        setFollowingData()
-        followingViewModel.monitorFollowingInfo().observe(viewLifecycleOwner){followingObserver ->
-            if (followingObserver!=null){
-                followingAdapter.setFollowingListForAdapter(followingObserver)
+        followingViewModel.viewModelScope.launch(Dispatchers.Main){
+            followingViewModel.monitorFollowingInfo().observe(viewLifecycleOwner){followingObserver ->
+                if (followingObserver!=null){
+                    false.showFollowingLoading()
+                    followingAdapter.setFollowingListForAdapter(followingObserver)
+                }
             }
         }
 
+
     }
 
-    private fun observeFollowingLoaded(){
-        followingViewModel.monitorFollowingDataLoaded().observe(viewLifecycleOwner){
-            if (it!=null){
-                showFollowingLoading(it)
-            }
-        }
-    }
-
-    private fun showFollowingLoading(condition:Boolean){
-        when(condition){
+    private fun Boolean.showFollowingLoading() {
+        when(this){
             true -> followingBind?.progressBarFollowing?.visibility=View.VISIBLE
             false -> followingBind?.progressBarFollowing?.visibility=View.GONE
         }

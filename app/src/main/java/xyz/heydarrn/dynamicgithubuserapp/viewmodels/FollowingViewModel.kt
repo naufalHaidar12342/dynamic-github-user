@@ -14,9 +14,6 @@ class FollowingViewModel : ViewModel() {
     private var _userFollowingInfo=MutableLiveData<ArrayList<UserFollowingInfoResponseItem>>()
     private val userFollowingInfo:LiveData<ArrayList<UserFollowingInfoResponseItem>> = _userFollowingInfo
 
-    private var _loadingAnimation=MutableLiveData<Boolean>()
-    private val showLoadingProgress:LiveData<Boolean> = _loadingAnimation
-
     fun showFollowingInfo(userFollowing:String){
         val followingClient=ApiConfig.getApiService().getSelectedUserFollowing(userFollowing)
         followingClient.enqueue(object : Callback<ArrayList<UserFollowingInfoResponseItem>> {
@@ -25,10 +22,8 @@ class FollowingViewModel : ViewModel() {
                 call: Call<ArrayList<UserFollowingInfoResponseItem>>,
                 response: Response<ArrayList<UserFollowingInfoResponseItem>>
             ) {
-                _loadingAnimation.value=true
                 if (response.isSuccessful){
                     _userFollowingInfo.postValue(response.body())
-                    _loadingAnimation.value=false
                 }
                 Log.d("following success", "onResponse: ${response.message()} ")
             }
@@ -47,5 +42,4 @@ class FollowingViewModel : ViewModel() {
         return userFollowingInfo
     }
 
-    fun monitorFollowingDataLoaded(): LiveData<Boolean> = showLoadingProgress
 }

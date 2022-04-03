@@ -24,10 +24,8 @@ class FollowersViewModel : ViewModel() {
                 call: Call<ArrayList<UserFollowersInfoResponseItem>>,
                 response: Response<ArrayList<UserFollowersInfoResponseItem>>
             ) {
-                _loadingAnimation.value=true
                 if (response.isSuccessful) {
                     _showFollowerOfUser.postValue(response.body())
-                    _loadingAnimation.value=false
                 }
                 Log.d("follower success", "onResponse: ${response.message()}")
             }
@@ -44,5 +42,5 @@ class FollowersViewModel : ViewModel() {
 
     fun setSelectedUserFollowersInfo(): LiveData<ArrayList<UserFollowersInfoResponseItem>> = showFollowerOfUser
 
-    fun monitorLoadingAnimation():LiveData<Boolean> = showLoadingProgress
+
 }
